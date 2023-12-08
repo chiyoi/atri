@@ -24,6 +24,7 @@ help () {
 
 build () {
     docker build \
+    --build-arg OPENAI_API_KEY=$OPENAI_API_KEY \
     --build-arg TOKEN_DISCORD_APPLICATION=$TOKEN_DISCORD_APPLICATION \
     -t chiyoi/$ARTIFACT .
 }
