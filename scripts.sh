@@ -23,24 +23,24 @@ help () {
 }
 
 build () {
-    sudo docker build \
+    docker build \
     --build-arg TOKEN_DISCORD_APPLICATION=$TOKEN_DISCORD_APPLICATION \
     -t chiyoi/$ARTIFACT .
 }
 
 up () {
-    sudo docker run -d \
+    docker run -d \
     --restart=on-failure:5 \
     --name=$ARTIFACT \
     chiyoi/$ARTIFACT
 }
 
 logs () {
-    sudo docker logs -f $ARTIFACT
+    docker logs -f $ARTIFACT
 }
 
 stop () {
-    sudo docker stop $ARTIFACT && sudo docker rm $ARTIFACT
+    docker stop $ARTIFACT && docker rm $ARTIFACT
 }
 
 update () {
