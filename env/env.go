@@ -46,6 +46,6 @@ func Dev() {
 func Prod() {
 	common()
 	os.Setenv("VERSION", "Yuxiu v0.1.0")
-	Database = "trinity"
+	Database = "atri"
 	CategoryChat = "1180508717167419432"
 }
