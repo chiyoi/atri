@@ -14,6 +14,7 @@ func Serve(s *discordgo.Session, m *discordgo.MessageCreate) (block bool) {
 		if err != nil {
 			logs.Error(err)
 		}
+		return true
 	}
-	return true
+	return false
 }

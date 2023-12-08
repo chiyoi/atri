@@ -4,6 +4,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 	"github.com/chiyoi/atri/handlers/chat"
 	"github.com/chiyoi/atri/handlers/ping"
+	"github.com/chiyoi/atri/handlers/version"
 )
 
 func MessageCreate() func(s *discordgo.Session, m *discordgo.MessageCreate) {
@@ -13,6 +14,7 @@ func MessageCreate() func(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 		switch {
 		case ping.Serve(s, m):
+		case version.Serve(s, m):
 		case chat.Serve(s, m):
 		}
 	}
