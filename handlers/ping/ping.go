@@ -9,14 +9,14 @@ func Serve(s *discordgo.Session, m *discordgo.MessageCreate) (block bool) {
 	switch m.Content {
 	case "Ping", "ping":
 		logs.Info("Pong!")
-		_, err := s.ChannelMessageSend(m.ChannelID, "Pong!")
+		_, err := s.ChannelMessageSend(m.ChannelID, "[Auto Reply]Pong!")
 		if err != nil {
 			logs.Error(err)
 		}
 		return true
 	case "Pong", "pong":
 		logs.Info("Ping?")
-		_, err := s.ChannelMessageSend(m.ChannelID, "Ping?")
+		_, err := s.ChannelMessageSend(m.ChannelID, "[Auto Reply]Ping?")
 		if err != nil {
 			logs.Error(err)
 		}

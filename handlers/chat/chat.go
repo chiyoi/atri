@@ -29,7 +29,16 @@ func Serve(s *discordgo.Session, m *discordgo.MessageCreate) (block bool) {
 	reply, err := s.ChannelMessageSend(channelID, "[Auto Reply]アトリ、検索中ーー")
 	if err != nil {
 		logs.Error(err)
+		return
 	}
+	defer func() {
+		if err != nil {
+			_, err := s.ChannelMessageEdit(channelID, reply.ID, "[Auto Reply]エラー発生。")
+			if err != nil {
+				logs.Error(err)
+			}
+		}
+	}()
 
 	c, err := s.Channel(channelID)
 	if err != nil {
