@@ -4,8 +4,12 @@ cd $(dirname $(realpath $scripts)) || return
 usage () {
     pwd
     echo "Scripts:"
+    echo "$scripts help"
+    echo "    Show this help message."
+    echo "$scripts run"
+    echo "    Run in develop environment."
     echo "$scripts build"
-    echo "    Build docker image."
+    echo "    Build image."
     echo "$scripts up"
     echo "    Run in docker."
     echo "$scripts logs"
@@ -22,17 +26,29 @@ help () {
     usage
 }
 
+run () {
+	export ASSISTANT_ID_ATRI="asst_aTI20AjVAwpCli9qAn7uceNs"
+	export CATEGORY="1180855047073054750"
+    export DATABASE="neko0001"
+    export ENDPOINT_COSMOS="https://neko03cosmos.documents.azure.com:443/"
+    go run .
+}
+
 build () {
-    docker build \
-    --build-arg OPENAI_API_KEY=$OPENAI_API_KEY \
-    --build-arg TOKEN_DISCORD_APPLICATION=$TOKEN_DISCORD_APPLICATION \
-    -t chiyoi/$ARTIFACT .
+    docker build -t chiyoi/$ARTIFACT .
 }
 
 up () {
     docker run -d \
     --restart=on-failure:5 \
     --name=$ARTIFACT \
+    -e OPENAI_API_KEY=$OPENAI_API_KEY \
+    -e TOKEN_DISCORD_APPLICATION=$TOKEN_DISCORD_APPLICATION \
+    -e TOKEN_DISCORD_APPLICATION=$TOKEN_DISCORD_APPLICATION \
+    -e ASSISTANT_ID_ATRI="asst_aTI20AjVAwpCli9qAn7uceNs" \
+	-e CATEGORY="1180508717167419432" \
+    -e DATABASE="atri" \
+    -e ENDPOINT_COSMOS="https://neko03cosmos.documents.azure.com:443/" \
     chiyoi/$ARTIFACT
 }
 
@@ -55,7 +71,7 @@ case "$1" in
 usage
 exit
 ;;
-help|build|up|logs|stop|update) 
+help|run|build|up|logs|stop|update) 
 $@
 ;;
 *)

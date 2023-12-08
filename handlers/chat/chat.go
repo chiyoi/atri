@@ -28,7 +28,7 @@ func Serve(s *discordgo.Session, m *discordgo.MessageCreate) (block bool) {
 		logs.Error(err)
 		return
 	}
-	if c.ParentID != env.CategoryChat {
+	if c.ParentID != env.Category {
 		return
 	}
 
@@ -50,7 +50,7 @@ func Serve(s *discordgo.Session, m *discordgo.MessageCreate) (block bool) {
 	}()
 
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, at.ContextKeyAPIKey, env.TokenOpenAI)
+	ctx = context.WithValue(ctx, at.ContextKeyAPIKey, env.OpenAiAPIKey)
 	ctx = contexts.WithDiscordSessionMessage(ctx, s, m.Message)
 
 	var threadID string
