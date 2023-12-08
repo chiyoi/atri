@@ -22,11 +22,20 @@ import (
 )
 
 func Serve(s *discordgo.Session, m *discordgo.MessageCreate) (block bool) {
-	logs.Info("Ask chat assistant.")
-	block = true
 	channelID := m.ChannelID
+	c, err := s.Channel(channelID)
+	if err != nil {
+		logs.Error(err)
+		return
+	}
+	if c.ParentID != env.CategoryChat {
+		return
+	}
+
+	block = true
+	logs.Info("Ask chat assistant.")
 	var reply *discordgo.Message
-	reply, err := s.ChannelMessageSend(channelID, "[Auto Reply]アトリ、検索中ーー")
+	reply, err = s.ChannelMessageSend(channelID, "[Auto Reply]アトリ、検索中ーー")
 	if err != nil {
 		logs.Error(err)
 		return
@@ -39,15 +48,6 @@ func Serve(s *discordgo.Session, m *discordgo.MessageCreate) (block bool) {
 			}
 		}
 	}()
-
-	c, err := s.Channel(channelID)
-	if err != nil {
-		logs.Error(err)
-		return
-	}
-	if c.ParentID != env.CategoryChat {
-		return
-	}
 
 	ctx := context.Background()
 	ctx = context.WithValue(ctx, at.ContextKeyAPIKey, env.TokenOpenAI)
